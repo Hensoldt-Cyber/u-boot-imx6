@@ -29,6 +29,7 @@
 #include <imx_sip.h>
 #include <linux/arm-smccc.h>
 #include <linux/bitops.h>
+#include <efi_loader.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
