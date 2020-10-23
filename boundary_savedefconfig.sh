@@ -32,6 +32,10 @@ for board in ${boards} ; do
 		cp defconfig configs/${defconfig}_defconfig;
 		echo updated ${defconfig}_defconfig;
 		git update-index configs/${defconfig}_defconfig;
+		dts="`grep -w CONFIG_DEFAULT_DEVICE_TREE configs/${defconfig}_defconfig | sed 's/CONFIG_DEFAULT_DEVICE_TREE=//'| sed 's/\"//g'`";
+		if [ x${dts} != x ] ; then
+			git update-index arch/arm/dts/${dts}.dts;
+		fi
 		update_cnt=`expr $update_cnt + 1`;
 	done
 	if [ x${hfile} == x ] ; then
