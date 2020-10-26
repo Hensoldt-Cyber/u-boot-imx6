@@ -53,6 +53,11 @@ int spl_board_boot_device(enum boot_device boot_dev_spl)
 #endif
 }
 
+void spl_board_init(void)
+{
+	puts("Normal Boot\n");
+}
+
 #define I2C_PAD_CTRL (PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE | PAD_CTL_PE)
 struct i2c_pads_info i2c_pad_info1 = {
 	.scl = {
@@ -74,6 +79,15 @@ struct i2c_pads_info i2c_pad_info1 = {
 
 
 static iomux_v3_cfg_t const init_pads[] = {
+	IOMUX_PAD_CTRL(SD1_CLK__USDHC1_CLK, USDHC_PAD_CTRL),
+	IOMUX_PAD_CTRL(SD1_CMD__USDHC1_CMD, USDHC_PAD_CTRL),
+	IOMUX_PAD_CTRL(SD1_DATA0__USDHC1_DATA0, USDHC_PAD_CTRL),
+	IOMUX_PAD_CTRL(SD1_DATA1__USDHC1_DATA1, USDHC_PAD_CTRL),
+	IOMUX_PAD_CTRL(SD1_DATA2__USDHC1_DATA2, USDHC_PAD_CTRL),
+	IOMUX_PAD_CTRL(SD1_DATA3__USDHC1_DATA3, USDHC_PAD_CTRL),
+#define GP_USDHC1_CD	IMX_GPIO_NR(2, 11)
+	IOMUX_PAD_CTRL(SD1_STROBE__GPIO2_IO11, 0x1c4),
+
 	IOMUX_PAD_CTRL(NAND_WE_B__USDHC3_CLK, USDHC_PAD_CTRL),
 	IOMUX_PAD_CTRL(NAND_WP_B__USDHC3_CMD, USDHC_PAD_CTRL),
 	IOMUX_PAD_CTRL(NAND_DATA04__USDHC3_DATA0, USDHC_PAD_CTRL),
@@ -87,14 +101,6 @@ static iomux_v3_cfg_t const init_pads[] = {
 #define GP_EMMC_RESET		IMX_GPIO_NR(3, 1)
 	IOMUX_PAD_CTRL(NAND_CE0_B__GPIO3_IO01, 0x140),
 
-	IOMUX_PAD_CTRL(SD1_CLK__USDHC1_CLK, USDHC_PAD_CTRL),
-	IOMUX_PAD_CTRL(SD1_CMD__USDHC1_CMD, USDHC_PAD_CTRL),
-	IOMUX_PAD_CTRL(SD1_DATA0__USDHC1_DATA0, USDHC_PAD_CTRL),
-	IOMUX_PAD_CTRL(SD1_DATA1__USDHC1_DATA1, USDHC_PAD_CTRL),
-	IOMUX_PAD_CTRL(SD1_DATA2__USDHC1_DATA2, USDHC_PAD_CTRL),
-	IOMUX_PAD_CTRL(SD1_DATA3__USDHC1_DATA3, USDHC_PAD_CTRL),
-#define GP_USDHC1_CD	IMX_GPIO_NR(2, 11)
-	IOMUX_PAD_CTRL(SD1_STROBE__GPIO2_IO11, 0x1c4),
 };
 
 struct fsl_esdhc_cfg usdhc_cfg[] = {
@@ -139,11 +145,6 @@ int power_init_board(void)
 }
 #endif
 
-void spl_board_init(void)
-{
-	puts("Normal Boot\n");
-}
-
 #ifdef CONFIG_SPL_LOAD_FIT
 int board_fit_config_name_match(const char *name)
 {
@@ -169,7 +170,7 @@ void board_init_f(ulong dummy)
 
 	preloader_console_init();
 
-	ret = spl_init();
+	ret = spl_early_init();
 	if (ret) {
 		pr_debug("spl_init() failed: %d\n", ret);
 		hang();
