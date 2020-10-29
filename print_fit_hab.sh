@@ -19,6 +19,11 @@ TEE_LOAD_ADDR=0xbe000000
 ATF_LOAD_ADDR=0x00960000
 VERSION=v2
 BL31=bl31-iMX8MN.bin
+elif grep -Eq "^CONFIG_IMX8MP=y$" .config; then
+TEE_LOAD_ADDR=0x56000000
+ATF_LOAD_ADDR=0x00960000
+VERSION=v2
+BL31=bl31-iMX8MP.bin
 fi
 
 if [ -z "$BL31" ]; then
@@ -74,6 +79,7 @@ for dtname in $DTBS
 do
 	if [ ${cnt} -ge 0 ]
 	then
+		echo $dtname
 		let fdt${cnt}_size=$(ls -lct $dtname | awk '{print $5}')
 
 		let fdt${cnt}_sign_off=$((last_sign_off))
