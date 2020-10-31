@@ -690,7 +690,6 @@ void fastboot_mmc_erase(const char *cmd, char *response)
 	fastboot_okay(NULL, response);
 }
 
-#ifdef CONFIG_SUPPORT_EMMC_BOOT
 /**
  * fastboot_lock_critical() - Disable writing to special
  * partitions like eMMC bootloader See eMMC spec for more
@@ -757,4 +756,3 @@ void fastboot_unlock_critical(char *cmd_parameter, char *response)
 
 	fastboot_okay(NULL, response);
 }
-#endif
