@@ -675,6 +675,12 @@ void board_eth_addresses(void)
 		env_set(USB_ETH, env_get("usbnet_devaddr"));
 #endif
 #endif
+#if defined(CONFIG_FEC_ENET1)
+	fec_env_set_ethaddr(0);
+#endif
+#if defined(CONFIG_FEC_ENET2)
+	fec_env_set_ethaddr(1);
+#endif
 }
 
 int board_eth_init(struct bd_info *bis)
