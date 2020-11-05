@@ -44,6 +44,11 @@ int board_phys_sdram_size(phys_size_t *sdram_size)
 	*sdram_size = SDRAM_SIZE;
 	return 0;
 }
+
+ulong board_get_usable_ram_top(ulong total_size)
+{
+	return MEM_SIZE + CONFIG_SYS_SDRAM_BASE;
+}
 #endif
 
 #if !defined(CONFIG_IMX8M)
