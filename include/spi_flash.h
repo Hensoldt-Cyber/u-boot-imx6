@@ -143,7 +143,7 @@ static inline int spi_flash_write(struct spi_flash *flash, u32 offset,
 		size_t len, const void *buf)
 {
 	struct mtd_info *mtd = &flash->mtd;
-	size_t retlen;
+	size_t retlen = 0;
 
 	return mtd->_write(mtd, offset, len, &retlen, buf);
 }

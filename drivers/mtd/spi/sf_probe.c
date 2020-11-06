@@ -107,7 +107,7 @@ static int spi_flash_std_write(struct udevice *dev, u32 offset, size_t len,
 {
 	struct spi_flash *flash = dev_get_uclass_priv(dev);
 	struct mtd_info *mtd = &flash->mtd;
-	size_t retlen;
+	size_t retlen = 0;
 
 	return mtd->_write(mtd, offset, len, &retlen, buf);
 }
