@@ -2542,9 +2542,16 @@ int spi_nor_scan(struct spi_nor *nor)
 	nor->write = spi_nor_write_data;
 	nor->read_reg = spi_nor_read_reg;
 	nor->write_reg = spi_nor_write_reg;
+	nor->status_opcode = SPINOR_OP_RDSR;
+	nor->status_ready_mask = SR_WIP;
+	nor->status_ready_level = 0;
 
-	if (spi->mode & ATMEL_REGS)
+	if (spi->mode & ATMEL_REGS) {
 		nor->write = spi_nor_write_data_atmel;
+		nor->status_opcode = SPINOR_OP_READ_STATUS2;
+		nor->status_ready_mask = SR_STATUS2_READY;
+		nor->status_ready_level = SR_STATUS2_READY;
+	}
 
 	if (spi->mode & SPI_RX_OCTAL) {
 		hwcaps.mask |= SNOR_HWCAPS_READ_1_1_8;
