@@ -122,7 +122,7 @@ static iomux_v3_cfg_t const init_pads[] = {
 };
 
 struct fsl_esdhc_cfg board_usdhc_cfg[] = {
-	{.esdhc_base = USDHC1_BASE_ADDR, .bus_width = 1},	/* keep numbering correct */
+	{.esdhc_base = USDHC1_BASE_ADDR, .bus_width = 1, .gp_cd = -1},	/* keep numbering correct */
 	{.esdhc_base = USDHC2_BASE_ADDR, .bus_width = 4, .gp_cd = GP_USDHC2_CD},
 	{.esdhc_base = USDHC3_BASE_ADDR, .bus_width = 8, .gp_reset = GP_EMMC_RESET},
 };
