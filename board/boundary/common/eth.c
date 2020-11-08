@@ -688,6 +688,9 @@ int board_eth_init(struct bd_info *bis)
 #if defined(CONFIG_PHY_ATHEROS) || defined(CONFIG_PHY_MICREL)
 #ifdef CONFIG_FEC_ENET1
 	gpio_request(GP_RGMII_PHY_RESET, "fec_rst");
+#if defined(GP_RGMII2_PHY_RESET) && !defined(CONFIG_FEC_ENET2)
+	gpio_request(GP_RGMII2_PHY_RESET, "fec2_rst");
+#endif
 	gpio_request(GP_PHY_RD0, "fec_rd0");
 	gpio_request(GP_PHY_RD1, "fec_rd1");
 	gpio_request(GP_PHY_RD2, "fec_rd2");
