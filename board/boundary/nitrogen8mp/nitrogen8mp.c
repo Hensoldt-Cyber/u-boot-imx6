@@ -144,7 +144,7 @@ static const struct display_info_t displays[] = {
 	VD_MIPI_1024_768M_60(MIPI, NULL, fbp_bus_gp((1 | (3 << 4)), 0, 0, 0), 0x68, FBP_PCA9546),
 	VD_MIPI_800_600MR_60(MIPI, NULL, fbp_bus_gp((1 | (3 << 4)), 0, 0, 0), 0x68, FBP_PCA9546),
 	VD_MIPI_720_480M_60(MIPI, NULL, fbp_bus_gp((1 | (3 << 4)), 0, 0, 0), 0x68, FBP_PCA9546),
-	VD_MIPI_VTFT101RPFT20(MIPI, board_detect_pca9546, 1, 0x70, FBP_PCA9540),
+	VD_MIPI_VTFT101RPFT20(MIPI, NULL, (1 | (3 << 4)), 0x70, FBP_PCA9540),
 
 	/* lvds */
 	VD_HANNSTAR7(LVDS, fbp_detect_i2c, fbp_bus_gp(3, 0, GP_LVDS_BKL_EN, 0), 0x38, FBTS_FT5X06),
