@@ -1323,9 +1323,7 @@
 	dr_mode = "otg";
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usb_dwc3_0>;
-#if 0
 	status = "okay";
-#endif
 	vbus-supply = <&reg_usb_otg_vbus>;
 };
 
@@ -1341,9 +1339,7 @@
 };
 
 &usb_dwc3_1 {
-#if 0
 	status = "okay";
-#endif
 	dr_mode = "host";
 };
 
