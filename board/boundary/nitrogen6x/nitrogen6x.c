@@ -499,6 +499,17 @@ void board_env_init(void) {
 }
 
 int board_init(void) {
+	gpio_request(GP_BACKLIGHT_RGB, "rgb backlight");
+	gpio_request(GP_BACKLIGHT_LVDS, "lvds backlight");
+	gpio_request(GP_REG_USBOTG, "usbotg power");
+	gpio_request(GP_USB_HUB_RESET, "usbh1 hub reset");
+	gpio_request(GP_GPIOKEY_BACK, "back");
+	gpio_request(GP_GPIOKEY_HOME, "home");
+	gpio_request(GP_GPIOKEY_MENU, "menu");
+	gpio_request(GP_GPIOKEY_POWER, "power");
+	gpio_request(GP_GPIOKEY_VOL_UP, "volup");
+	gpio_request(GP_GPIOKEY_VOL_DOWN, "voldown");
+
 	common_board_init(i2c_pads, I2C_BUS_CNT, IOMUXC_GPR1_OTG_ID_GPIO1,
 	displays, display_cnt, 0);
 	return 0;
