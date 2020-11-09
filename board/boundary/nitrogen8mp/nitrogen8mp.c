@@ -69,6 +69,16 @@ static iomux_v3_cfg_t const init_pads[] = {
 	IOMUX_PAD_CTRL(GPIO1_IO09__GPIO1_IO09, 0x106),
 #define GP_LVDS2_BKL_EN		IMX_GPIO_NR(3, 21)
 	IOMUX_PAD_CTRL(SAI5_RXD0__GPIO3_IO21, 0x106),
+	/* eqos */
+#define GP_EQOS_MII_MDC		IMX_GPIO_NR(1, 16)
+	IOMUX_PAD_CTRL(ENET_MDC__GPIO1_IO16, 0x3),
+#define GP_EQOS_MII_MDIO	IMX_GPIO_NR(1, 17)
+	IOMUX_PAD_CTRL(ENET_MDIO__GPIO1_IO17, 0x3),
+	/* fec */
+#define GP_FEC_MII_MDC		IMX_GPIO_NR(4, 4)
+	IOMUX_PAD_CTRL(SAI1_RXD2__GPIO4_IO04, 0x3),
+#define GP_FEC_MII_MDIO		IMX_GPIO_NR(4, 5)
+	IOMUX_PAD_CTRL(SAI1_RXD3__GPIO4_IO05, 0x3),
 };
 
 int board_early_init_f(void)
@@ -197,6 +207,10 @@ int board_init(void)
 	gpio_request(GPIRQ_TS_GT911, "gt11_irq");
 	gpio_request(GP_SN65DSI83_EN, "sn65en");
 	gpio_request(GP_LTK08_MIPI_EN, "ltk08_mipi_en");
+	gpio_request(GP_EQOS_MII_MDC, "eqos_mdc");
+	gpio_request(GP_EQOS_MII_MDIO, "eqos_mdio");
+	gpio_request(GP_FEC_MII_MDC, "fec_mdc");
+	gpio_request(GP_FEC_MII_MDIO, "fec_mdio");
 
 #ifdef CONFIG_DM_ETH
 	board_eth_init(gd->bd);
