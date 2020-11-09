@@ -1126,9 +1126,7 @@
 	dr_mode = "otg";
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usb_dwc3_0>;
-#if 0
 	status = "okay";
-#endif
 	vbus-supply = <&reg_usb_otg_vbus>;
 };
 
@@ -1141,9 +1139,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usb_dwc3_1>;
 	reset-gpios = GP_USB3_1_HUB_RESET, GP_USB3_1_DN3_SD_RESET;
-#if 0
 	status = "okay";
-#endif
 };
 
 &usdhc1 {
