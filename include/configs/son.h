@@ -47,7 +47,6 @@
 
 #define CONFIG_REMAKE_ELF
 
-#define CONFIG_BOARD_EARLY_INIT_F
 #define CONFIG_BOARD_POSTCLK_INIT
 
 /* Flat Device Tree Definitions */
@@ -106,7 +105,6 @@
 
 #define CONFIG_IMX_BOOTAUX
 
-#define CONFIG_FSL_USDHC
 
 #define CONFIG_SYS_FSL_USDHC_NUM	1
 #define CONFIG_SYS_FSL_ESDHC_ADDR       0
