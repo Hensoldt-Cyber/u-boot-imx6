@@ -94,9 +94,16 @@ static void swap_packet(uint32_t *packet, int length)
 #include <asm-generic/gpio.h>
 #include <asm/mach-imx/gpio.h>
 
+#ifndef GP_MII_MDIO
 #ifdef CONFIG_IMX8M
+#ifdef CONFIG_IMX8MP
+#define GP_MII_MDIO	IMX_GPIO_NR(4, 5)
+#define GP_MII_MDC	IMX_GPIO_NR(4, 4)
+#else
 #define GP_MII_MDIO	IMX_GPIO_NR(1, 17)
 #define GP_MII_MDC	IMX_GPIO_NR(1, 16)
+#endif
+#endif
 #endif
 
 static void bangout(unsigned val, int cnt)
