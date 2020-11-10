@@ -79,6 +79,9 @@ static iomux_v3_cfg_t const init_pads[] = {
 	IOMUX_PAD_CTRL(SAI1_RXD2__GPIO4_IO04, 0x3),
 #define GP_FEC_MII_MDIO		IMX_GPIO_NR(4, 5)
 	IOMUX_PAD_CTRL(SAI1_RXD3__GPIO4_IO05, 0x3),
+
+#define GP_USB1_HUB_RESET	IMX_GPIO_NR(1, 6)
+	IOMUX_PAD_CTRL(GPIO1_IO06__GPIO1_IO06, WEAK_PULLUP),
 };
 
 int board_early_init_f(void)
@@ -98,9 +101,6 @@ int board_early_init_f(void)
 #if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
 int board_usb_hub_gpio_init(void)
 {
-#define GP_USB1_HUB_RESET	IMX_GPIO_NR(1, 6)
-	imx_iomux_v3_setup_pad(MX8MP_PAD_GPIO1_IO06__GPIO1_IO06 |
-			MUX_PAD_CTRL(WEAK_PULLUP));
 	return GP_USB1_HUB_RESET;
 }
 #endif
@@ -211,6 +211,9 @@ int board_init(void)
 	gpio_request(GP_EQOS_MII_MDIO, "eqos_mdio");
 	gpio_request(GP_FEC_MII_MDC, "fec_mdc");
 	gpio_request(GP_FEC_MII_MDIO, "fec_mdio");
+	gpio_request(GP_USB1_HUB_RESET, "usb1_hub_reset");
+	gpio_direction_output(GP_TS_GT911_RESET, 0);
+	gpio_direction_output(GP_USB1_HUB_RESET, 0);
 
 #ifdef CONFIG_DM_ETH
 	board_eth_init(gd->bd);
