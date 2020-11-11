@@ -79,7 +79,6 @@ for dtname in $DTBS
 do
 	if [ ${cnt} -ge 0 ]
 	then
-		echo $dtname
 		let fdt${cnt}_size=$(ls -lct $dtname | awk '{print $5}')
 
 		let fdt${cnt}_sign_off=$((last_sign_off))
