@@ -14,9 +14,6 @@
 #include <linux/sizes.h>
 #include <asm/arch/imx-regs.h>
 
-#ifdef CONFIG_SECURE_BOOT
-#define CONFIG_CSF_SIZE			0x2000 /* 8K region */
-#endif
 #define CONFIG_SYS_MONITOR_LEN		SZ_512K
 #define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR
 #define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR	0x300
