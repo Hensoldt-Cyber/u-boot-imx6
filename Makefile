@@ -1569,7 +1569,7 @@ u-boot.cnt: u-boot.bin FORCE
 flash.bin: spl/u-boot-spl.bin u-boot.cnt FORCE
 	$(Q)$(MAKE) $(build)=arch/arm/mach-imx $@
 else
-ifeq ($(CONFIG_IMX_HAB),y)
+ifeq ($(CONFIG_SECURE_BOOT),y)
 # for HAB support, data must be @0x3000 to contain CSF
 MKIMAGEFLAGS_u-boot.itb = "-p 0x3000"
 endif
