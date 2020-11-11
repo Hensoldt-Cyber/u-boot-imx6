@@ -1402,7 +1402,7 @@ endif
 DTBS = $(patsubst %,arch/$(ARCH)/dts/%.dtb,$(subst ",,$(CONFIG_OF_LIST)))
 PAD_IMAGE = $(srctree)/arch/arm/mach-imx/pad_image.sh
 $(U_BOOT_ITS): $(U_BOOT_ITS_DEPS) FORCE
-ifdef CONFIG_SECURE_BOOT
+ifdef CONFIG_IMX_HAB
 	$(PAD_IMAGE) bl31-${SOC_CPU}.bin
 	$(PAD_IMAGE) u-boot-nodtb.bin $(DTBS)
 endif
