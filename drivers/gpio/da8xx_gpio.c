@@ -402,6 +402,7 @@ int gpio_direction_input(unsigned int gpio)
 
 int gpio_direction_output(unsigned int gpio, int value)
 {
+	printf("Called gpio_direction_output() in da8xx_gpio.c.\n");
 	struct davinci_gpio *bank;
 
 	bank = GPIO_BANK(gpio);

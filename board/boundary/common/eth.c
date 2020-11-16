@@ -186,6 +186,7 @@ static void set_strap_input(void)
 #ifdef CONFIG_FEC_MXC
 static void init_fec_clocks(void)
 {
+	printf("Called init_fec_clocks() in eth.c.\n");
 #ifdef CONFIG_MX6SX
 	struct iomuxc *iomuxc_regs = (struct iomuxc *)IOMUXC_BASE_ADDR;
 	struct anatop_regs *anatop = (struct anatop_regs *)ANATOP_BASE_ADDR;
@@ -206,6 +207,9 @@ static void init_fec_clocks(void)
 			return;
 		}
 	}
+
+	reg = readl(&anatop->pll_enet);
+	printf("7) anatop->pll_enet = %u\n", reg);
 #endif
 #ifdef CONFIG_MX6ULL
 	struct iomuxc *iomuxc_regs = (struct iomuxc *)IOMUXC_BASE_ADDR;
@@ -267,6 +271,7 @@ static void init_fec_clocks(void)
 #ifndef CONFIG_DM_ETH
 static void init_fec(bd_t *bis, unsigned phy_mask)
 {
+	printf("Called init_fec() in eth.c.\n");
 #if defined(CONFIG_MX6SX) || defined(CONFIG_MX6ULL)
 	uint32_t mdio_base = ENET_MDIO_BASE;
 #if defined(CONFIG_FEC_ENET1)
@@ -284,6 +289,7 @@ static void init_fec(bd_t *bis, unsigned phy_mask)
 	if (!bus)
 		return;
 #if defined(CONFIG_FEC_ENET1)
+	printf("phy_mask & 0xffff -> %u\n", phy_mask & 0xffff);
 	phydev = phy_find_by_mask(bus, phy_mask & 0xffff, PHY_MODE);
 	if (!phydev) {
 		printf("%s: phy not found\n", __func__);
@@ -298,6 +304,7 @@ static void init_fec(bd_t *bis, unsigned phy_mask)
 	}
 #endif
 #if defined(CONFIG_FEC_ENET2)
+printf("phy_mask >> 16 -> %u\n", phy_mask >> 16);
 	phydev = phy_find_by_mask(bus, phy_mask >> 16, PHY_MODE);
 	if (!phydev) {
 		printf("%s: phy2 not found\n", __func__);
@@ -326,12 +333,14 @@ error:
 #ifdef CONFIG_PHY_ATHEROS
 static void setup_gpio_ar8035(void)
 {
+	printf("Called setup_gpio_ar8035() in eth.c.\n");
 	set_strap_pins(STRAP_AR8035);
 	SETUP_IOMUX_PADS(enet_ar8035_gpio_pads);
 }
 
 static void setup_enet_ar8035(void)
 {
+	printf("Called setup_enet_ar8035() in eth.c.\n");
 	SETUP_IOMUX_PADS(enet_ar8035_pads);
 }
 #ifndef CONFIG_PHY_MICREL
@@ -380,8 +389,10 @@ static void setup_enet_ksz9021(void)
 #if defined(CONFIG_PHY_ATHEROS) || defined(CONFIG_PHY_MICREL)
 static void release_phy_reset(int gp)
 {
+	printf("Called release_phy_reset() in eth.c.\n");
 	gpio_set_value(gp, 1);
 #ifdef CONFIG_FEC_RESET_PULLUP
+	printf("Called release_phy_reset() for CONFIG_FEC_RESET_PULLUP in eth.c.\n");
 	udelay(20);
 	gpio_direction_input(gp);
 	/* Let external pull have time to pull to guaranteed high */
@@ -391,6 +402,7 @@ static void release_phy_reset(int gp)
 
 static void setup_iomux_enet(int kz)
 {
+	printf("Called setup_iomux_enet() in eth.c.\n");
 #ifdef GP_KS8995_RESET
 	gpio_direction_output(GP_KS8995_RESET, 0);
 #endif
@@ -470,6 +482,7 @@ static void phy_ar8031_config(struct phy_device *phydev)
 
 static void phy_ar8035_config(struct phy_device *phydev)
 {
+	printf("Called phy_ar8035_config() in eth.c.\n");
 	int val;
 
 	/*
@@ -498,6 +511,7 @@ static void phy_ar8035_config(struct phy_device *phydev)
 #ifndef CONFIG_PHY_MICREL
 int board_phy_config(struct phy_device *phydev)
 {
+	printf("Called board_phy_config() in eth.c.\n");
 	if (((phydev->drv->uid ^ PHY_ID_AR8031) & 0xffffffef) == 0)
 		phy_ar8031_config(phydev);
 	else if (((phydev->drv->uid ^ PHY_ID_AR8035) & 0xffffffef) == 0)
@@ -613,6 +627,7 @@ free_slave:
 
 void board_eth_addresses(void)
 {
+	printf("Called board_eth_addresses() in eth.c.\n");
 #if defined(CONFIG_USB_ETHER)
 #if defined(CONFIG_FEC_MXC) && defined(CONFIG_FEC_ENET1) \
 	&& defined(CONFIG_FEC_ENET2)
@@ -629,12 +644,16 @@ void board_eth_addresses(void)
 		unsigned char mac[8];
 
 		imx_get_mac_from_fuse(0, mac);
+		printf("MAC address FEC0 in board_eth_addresses() in eth.c = %s.\n", mac);
+		imx_get_mac_from_fuse(1, mac);
+		printf("MAC address FEC1 in board_eth_addresses() in eth.c = %s.\n", mac);
 		if (is_valid_ethaddr(mac))
 			eth_env_set_enetaddr(USB_ETH, mac);
 		else
 			env_set(USB_ETH, env_get("usbnet_devaddr"));
 	}
 #else
+	printf("ELSE: board_eth_addresses() in eth.c\n");
 	if (!env_get(USB_ETH))
 		env_set(USB_ETH, env_get("usbnet_devaddr"));
 #endif
@@ -643,6 +662,7 @@ void board_eth_addresses(void)
 
 int board_eth_init(bd_t *bis)
 {
+	printf("Called board_eth_init().\n");
 #if defined(CONFIG_PHY_ATHEROS) || defined(CONFIG_PHY_MICREL)
 #ifdef CONFIG_FEC_ENET1
 	gpio_request(GP_RGMII_PHY_RESET, "fec_rst");

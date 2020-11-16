@@ -55,6 +55,7 @@ static int ar8031_config(struct phy_device *phydev)
 
 static int ar8035_config(struct phy_device *phydev)
 {
+	printf("Called ar8035_config() in atheros.c.\n");
 	unsigned ctrl1000 = 0;
 	unsigned features = phydev->drv->features;
 	int regval;
@@ -77,6 +78,7 @@ static int ar8035_config(struct phy_device *phydev)
 		/* 1/4 drive strength since off was requested */
 		regval |= 0x180;
 	}
+	printf("regval in atheros.c is %u.\n", regval);
 	phy_write(phydev, MDIO_DEVAD_NONE, 0xe, regval);
 
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x05);
@@ -146,6 +148,7 @@ static struct phy_driver AR8035_driver =  {
 
 int phy_atheros_init(void)
 {
+	printf("Called phy_atheros_init() in atheros.c.\n");
 	phy_register(&AR8021_driver);
 	phy_register(&AR8031_driver);
 	phy_register(&AR8035_driver);

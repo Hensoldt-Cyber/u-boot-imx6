@@ -60,6 +60,7 @@ struct mii_dev *miiphy_get_dev_by_name(const char *devname)
  */
 void miiphy_init(void)
 {
+	printf("Called miiphy_init() in miiphyutil.c.\n");
 	INIT_LIST_HEAD(&mii_devs);
 	current_mii = NULL;
 }

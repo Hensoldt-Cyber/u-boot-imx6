@@ -236,6 +236,7 @@ int eth_unregister(struct eth_device *dev)
 
 int eth_initialize(void)
 {
+	printf("Called eth_initialize() in eth_legacy.c.\n");
 	int num_devices = 0;
 
 	eth_devices = NULL;
@@ -246,9 +247,11 @@ int eth_initialize(void)
 	 * If not, call a CPU-specific one
 	 */
 	if (board_eth_init != __def_eth_init) {
+		printf("Select board_eth_init() in eth_legacy.c.\n");
 		if (board_eth_init(gd->bd) < 0)
 			printf("Board Net Initialization Failed\n");
 	} else if (cpu_eth_init != __def_eth_init) {
+		printf("Select cpu_eth_init() in eth_legacy.c.\n");
 		if (cpu_eth_init(gd->bd) < 0)
 			printf("CPU Net Initialization Failed\n");
 	} else {

@@ -518,6 +518,7 @@ static const unsigned short gpios_in[] = {
 
 int board_early_init_f(void)
 {
+	printf("Called board_early_init_f().\n");
 	set_gpios_in(gpios_in, ARRAY_SIZE(gpios_in));
 	set_gpios(gpios_out_high, ARRAY_SIZE(gpios_out_high), 1);
 	set_gpios(gpios_out_low, ARRAY_SIZE(gpios_out_low), 0);
@@ -528,6 +529,7 @@ int board_early_init_f(void)
 
 int board_init(void)
 {
+	printf("Called board_init().\n");
 	common_board_init(i2c_pads, I2C_BUS_CNT, 0, displays, display_cnt, 0);
 	return 0;
 }

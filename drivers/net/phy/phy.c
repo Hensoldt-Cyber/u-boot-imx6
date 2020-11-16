@@ -434,6 +434,7 @@ int genphy_config(struct phy_device *phydev)
 
 int genphy_startup(struct phy_device *phydev)
 {
+	printf("Called genphy_startup() in phy.c.\n");
 	int ret;
 
 	ret = genphy_update_link(phydev);
@@ -464,6 +465,7 @@ static LIST_HEAD(phy_drivers);
 
 int phy_init(void)
 {
+	printf("Called phy_init() in phy.c.\n");
 #ifdef CONFIG_B53_SWITCH
 	phy_b53_init();
 #endif
@@ -474,6 +476,7 @@ int phy_init(void)
 	phy_aquantia_init();
 #endif
 #ifdef CONFIG_PHY_ATHEROS
+	printf("Select phy_atheros_init() in phy.c.\n");
 	phy_atheros_init();
 #endif
 #ifdef CONFIG_PHY_BROADCOM
@@ -498,6 +501,7 @@ int phy_init(void)
 	phy_micrel_ksz8xxx_init();
 #endif
 #ifdef CONFIG_PHY_MICREL_KSZ90X1
+	printf("Select phy_micrel_ksz90x1_init() in phy.c.\n");
 	phy_micrel_ksz90x1_init();
 #endif
 #ifdef CONFIG_PHY_MESON_GXL
@@ -581,6 +585,7 @@ int phy_set_supported(struct phy_device *phydev, u32 max_speed)
 
 static int phy_probe(struct phy_device *phydev)
 {
+	printf("Called phy_probe() in phy.c.\n");
 	int err = 0;
 
 	phydev->advertising = phydev->drv->features;
@@ -607,6 +612,7 @@ static struct phy_driver *generic_for_interface(phy_interface_t interface)
 static struct phy_driver *get_phy_driver(struct phy_device *phydev,
 					 phy_interface_t interface)
 {
+	printf("Called get_phy_driver() in phy.c.\n");
 	struct list_head *entry;
 	int phy_id = phydev->phy_id;
 	struct phy_driver *drv = NULL;
@@ -618,6 +624,7 @@ static struct phy_driver *get_phy_driver(struct phy_device *phydev,
 	}
 
 	/* If we made it here, there's no driver for this PHY */
+	printf("there's no driver for this PHY in phy.c.\n");
 	return generic_for_interface(interface);
 }
 
@@ -625,6 +632,7 @@ static struct phy_device *phy_device_create(struct mii_dev *bus, int addr,
 					    u32 phy_id,
 					    phy_interface_t interface)
 {
+	printf("Called phy_device_create() in phy.c.\n");
 	struct phy_device *dev;
 
 	/*
@@ -670,6 +678,7 @@ static struct phy_device *phy_device_create(struct mii_dev *bus, int addr,
  */
 int __weak get_phy_id(struct mii_dev *bus, int addr, int devad, u32 *phy_id)
 {
+	printf("Called get_phy_id() in phy.c.\n");
 	int phy_reg;
 
 	/*
@@ -698,6 +707,7 @@ static struct phy_device *create_phy_by_mask(struct mii_dev *bus,
 					     uint phy_mask, int devad,
 					     phy_interface_t interface)
 {
+	printf("Called create_phy_by_mask() in phy.c.\n");
 	u32 phy_id = 0xffffffff;
 
 	while (phy_mask) {
@@ -715,6 +725,7 @@ static struct phy_device *search_for_existing_phy(struct mii_dev *bus,
 						  uint phy_mask,
 						  phy_interface_t interface)
 {
+	printf("Called search_for_existing_phy() in phy.c.\n");
 	/* If we have one, return the existing device, with new interface */
 	while (phy_mask) {
 		int addr = ffs(phy_mask) - 1;
@@ -732,6 +743,7 @@ static struct phy_device *get_phy_device_by_mask(struct mii_dev *bus,
 						 uint phy_mask,
 						 phy_interface_t interface)
 {
+	printf("Called get_phy_device_by_mask() in phy.c.\n");
 	int i;
 	struct phy_device *phydev;
 
@@ -845,6 +857,7 @@ int miiphy_reset(const char *devname, unsigned char addr)
 struct phy_device *phy_find_by_mask(struct mii_dev *bus, uint phy_mask,
 				    phy_interface_t interface)
 {
+	printf("Called phy_find_by_mask() in phy.c.\n");
 	/* Reset the bus */
 	if (bus->reset) {
 		bus->reset(bus);
@@ -862,6 +875,7 @@ void phy_connect_dev(struct phy_device *phydev, struct udevice *dev)
 void phy_connect_dev(struct phy_device *phydev, struct eth_device *dev)
 #endif
 {
+	printf("Called phy_connect_dev() in phy.c.\n");
 	/* Soft Reset the PHY */
 	phy_reset(phydev);
 	if (phydev->dev && phydev->dev != dev) {
@@ -914,6 +928,7 @@ struct phy_device *phy_connect(struct mii_dev *bus, int addr,
  */
 int phy_startup(struct phy_device *phydev)
 {
+	printf("Called phy_startup() in phy.c.\n");
 	if (phydev->drv->startup)
 		return phydev->drv->startup(phydev);
 
@@ -922,6 +937,7 @@ int phy_startup(struct phy_device *phydev)
 
 __weak int board_phy_config(struct phy_device *phydev)
 {
+	printf("Called board_phy_config() in phy.c.\n");
 	if (phydev->drv->config)
 		return phydev->drv->config(phydev);
 	return 0;
@@ -929,6 +945,7 @@ __weak int board_phy_config(struct phy_device *phydev)
 
 int phy_config(struct phy_device *phydev)
 {
+	printf("Called phy_config() in phy.c.\n");
 	/* Invoke an optional board-specific helper */
 	return board_phy_config(phydev);
 }

@@ -569,10 +569,12 @@ static int initr_bbmii(void)
 #ifdef CONFIG_CMD_NET
 static int initr_net(void)
 {
+	printf("Called initr_net() in board_r.c.\n");
 	puts("Net:   ");
 	eth_initialize();
 #if defined(CONFIG_RESET_PHY_R)
 	debug("Reset Ethernet PHY\n");
+	printf("Called initr_net() for CONFIG_RESET_PHY_R in board_r.c.\n");
 	reset_phy();
 #endif
 	return 0;

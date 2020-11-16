@@ -146,6 +146,7 @@ int gpio_direction_input(unsigned gpio)
 
 int gpio_direction_output(unsigned gpio, int value)
 {
+	printf("Called gpio_direction_output() in mxc_gpio.c for gpio = %u with value = %u.\n", gpio, value);
 	int ret = gpio_set_value(gpio, value);
 
 	if (ret < 0)

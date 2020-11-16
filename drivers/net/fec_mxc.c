@@ -506,6 +506,7 @@ static int fec_open(struct udevice *dev)
 static int fec_open(struct eth_device *edev)
 #endif
 {
+	printf("Called fec_open() in fec_mxc.c.\n");
 #ifdef CONFIG_DM_ETH
 	struct fec_priv *fec = dev_get_priv(dev);
 #else
@@ -1102,6 +1103,7 @@ static void fec_free_descs(struct fec_priv *fec)
 
 struct mii_dev *fec_get_miibus(ulong base_addr, int dev_id)
 {
+	printf("Called fec_get_miibus() in fec_mxc.c.\n");
 	struct ethernet_regs *eth = (struct ethernet_regs *)base_addr;
 	struct mii_dev *bus;
 	int ret;
@@ -1135,6 +1137,7 @@ static int fec_probe(bd_t *bd, int dev_id, uint32_t base_addr,
 		struct mii_dev *bus, int phy_id)
 #endif
 {
+	printf("Called fec_probe() in fec_mxc.c.\n");
 	struct eth_device *edev;
 	struct fec_priv *fec;
 	unsigned char ethaddr[6];

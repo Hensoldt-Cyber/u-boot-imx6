@@ -904,6 +904,7 @@ void enable_qspi_clk(int qspi_num)
 #ifdef CONFIG_FEC_MXC
 int enable_fec_anatop_clock(int fec_id, enum enet_freq freq)
 {
+	printf("Called enable_fec_anatop_clock() in arch/arm/mach-imx/mx6/clock.c.\n");
 	u32 reg = 0;
 	s32 timeout = 100000;
 
@@ -947,6 +948,7 @@ int enable_fec_anatop_clock(int fec_id, enum enet_freq freq)
 		reg |= BM_ANADIG_PLL_ENET2_ENABLE;
 	reg &= ~BM_ANADIG_PLL_ENET_BYPASS;
 	writel(reg, &anatop->pll_enet);
+	printf("0) anatop->pll_enet = %u\n", reg);
 
 #ifdef CONFIG_MX6SX
 	/* Disable enet system clcok before switching clock parent */
@@ -959,20 +961,26 @@ int enable_fec_anatop_clock(int fec_id, enum enet_freq freq)
 	 * pll2_pfd2_396m-> ENET_PODF-> ENET_AHB
 	 */
 	reg = readl(&imx_ccm->chsccdr);
+	printf("1) chsccdr = %u\n", reg);
 	reg &= ~(MXC_CCM_CHSCCDR_ENET_PRE_CLK_SEL_MASK
 		 | MXC_CCM_CHSCCDR_ENET_PODF_MASK
 		 | MXC_CCM_CHSCCDR_ENET_CLK_SEL_MASK);
+	printf("2) chsccdr = %u\n", reg);
 	/* PLL2 PFD2 */
 	reg |= (4 << MXC_CCM_CHSCCDR_ENET_PRE_CLK_SEL_OFFSET);
+	printf("3) chsccdr = %u\n", reg);
 	/* Div = 2*/
 	reg |= (1 << MXC_CCM_CHSCCDR_ENET_PODF_OFFSET);
 	reg |= (0 << MXC_CCM_CHSCCDR_ENET_CLK_SEL_OFFSET);
+	printf("4) chsccdr = %u\n", reg);
 	writel(reg, &imx_ccm->chsccdr);
+	printf("5) chsccdr = %u\n", reg);
 
 	/* Enable enet system clock */
 	reg = readl(&imx_ccm->CCGR3);
 	reg |= MXC_CCM_CCGR3_ENET_MASK;
 	writel(reg, &imx_ccm->CCGR3);
+	printf("6) CCGR3 = %u\n", reg);
 #endif
 	return 0;
 }

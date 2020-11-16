@@ -30,6 +30,7 @@ int eth_env_set_enetaddr_by_index(const char *base_name, int index,
 
 void eth_common_init(void)
 {
+	printf("Called eth_common_init() in eth_common.c.\n");
 	bootstage_mark(BOOTSTAGE_ID_NET_ETH_START);
 #if defined(CONFIG_MII) || defined(CONFIG_CMD_MII) || defined(CONFIG_PHYLIB)
 	miiphy_init();

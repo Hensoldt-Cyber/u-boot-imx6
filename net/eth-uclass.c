@@ -384,6 +384,7 @@ int eth_rx(void)
 
 int eth_initialize(void)
 {
+	printf("Called eth_initialize() in eth-uclass.c.\n");
 	int num_devices = 0;
 	struct udevice *dev;
 
